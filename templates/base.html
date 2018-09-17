@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/static/blog/css/home_site.css">
+    <link rel="stylesheet" href="/static/blog/css/article_detail.css">
+    <link rel="stylesheet" href="/static/blog/bs/css/bootstrap.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <style>
+        * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        width: 100%;
+        height: 60px;
+        background-color: #333333;
+        line-height: 60px;
+    }
+
+    .header .title {
+        font-size: 18px;
+        font-weight: 100;
+        line-height: 60px;
+        color: white;
+        margin-left: 15px;
+        margin-top: -10px;
+    }
+
+    .backend {
+        float: right;
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    .pub_info {
+        margin-top: 10px;
+        color: darkgrey;
+    }
+
+    .menu {
+        margin-top: 20px;
+    }
+
+
+    </style>
+
+
+</head>
+<body>
+
+
+<div class="header">
+    <div class="content">
+        <p class="title">
+            <span>{{ blog.title }}</span>
+            <a href="/cn_backend/" class="backend">管理</a>
+        </p>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 menu">
+            {% load mytags %}
+            {% get_calssfication_style username %}
+        </div>
+        <div class="col-md-9">
+            {% block content %}
+
+            {% endblock %}
+         <ul class="pagination" id="pager">
+
+                 {% if article_list.has_previous %}
+                    <li class="previous"><a href="/index/?page={{ article_list.previous_page_number }}">上一页</a></li>
+                 {% else %}
+                    <li class="previous disabled"><a href="#">上一页</a></li>
+                 {% endif %}
+                 {% for num in pageRange %}
+
+                     {% if num == currentPage %}
+                       <li class="item active"><a href="/index/?page={{ num }}">{{ num }}</a></li>
+                     {% else %}
+                       <li class="item"><a href="/index/?page={{ num }}">{{ num }}</a></li>
+
+                     {% endif %}
+                 {% endfor %}
+
+                 {% if article_list.has_next %}
+                    <li class="next"><a href="/index/?page={{ article_list.next_page_number }}">下一页</a></li>
+                 {% else %}
+                    <li class="next disabled"><a href="#">下一页</a></li>
+                 {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
